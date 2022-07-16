@@ -15,7 +15,7 @@ Getting Started
 
 download the project and create a .env file in the root directory of the project, create a variable with the name REACT_APP_GITHUB_URL and assign this github api endpoint to it "https://api.github.com", create another variable with the name REACT_APP_GITHUB_TOKEN and assign your secret api token to it,when done the .env file should look like this
 
-REACT_APP_GITHUB_URL = "https://api.github.com"
+REACT_APP_GITHUB_URL = "https://api.github.com" </br>
 REACT_APP_GITHUB_TOKEN ="your token here"
 
 The github api token can be generated from github settings page after login.
