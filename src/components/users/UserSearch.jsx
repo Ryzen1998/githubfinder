@@ -2,11 +2,13 @@ import  { React,useState,useContext } from 'react'
 import GithubContext from '../../context/github/GithubContext'
 import AlertContext from '../../context/alert/AlertContext'
 import Alerts from '../layout/Alerts'
+import { searchUsers } from '../../context/github/GithubActions'
+
 
 
 function UserSearch() {
     const [text,setText]=useState('')
-    const {users,searchUsers,clearUsers}=useContext(GithubContext)
+    const {users,dispatch}=useContext(GithubContext)
     const {setAlert}=useContext(AlertContext)
 
     const handleChange =(e)=>{
@@ -14,13 +16,18 @@ function UserSearch() {
 
 
     }
-    const handleSubmit=(e)=>{
+    const handleSubmit=async (e)=>{
         e.preventDefault()
         if(text===''){
            setAlert('please enter something','error')
         }
         else{
-            searchUsers(text)
+              dispatch({type:'setLoading'})
+             const usersList =await searchUsers(text)
+             
+             dispatch({type:'getUsers',
+             payLoad:usersList
+            })
            setText('')
         }
 
@@ -28,7 +35,7 @@ function UserSearch() {
 
   return (
     <div className='grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 mb-8 gap-8'>
-      <div className=''>
+      <div>
         <form onSubmit={handleSubmit}>
             <div className="form-control">
                 <div className="relative">
@@ -40,7 +47,7 @@ function UserSearch() {
       </div>
       {users.length>0 &&(
 
-<div className=""><button onClick={clearUsers} className="btn btn-ghost btn-lg">clear</button></div>
+<div className=""><button onClick={()=>dispatch({type:'clearUsers'})} className="btn btn-ghost btn-lg">clear</button></div>
       )}
       
      <Alerts/>

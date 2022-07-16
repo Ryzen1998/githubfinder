@@ -27,6 +27,13 @@ const GithubReducer =(state,action)=>{
                     ...state,
                     isLoading:true
                 }
+                case 'getUserAndRepos':
+      return {
+        ...state,
+        userProfile: action.payLoad.userProfile,
+        repos: action.payLoad.repos,
+        isLoading: false,
+      }
         default:
             return state
     }
